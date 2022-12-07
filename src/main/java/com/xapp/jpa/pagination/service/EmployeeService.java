@@ -8,6 +8,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class EmployeeService {
 
@@ -18,7 +20,23 @@ public class EmployeeService {
         return employeeRepository.findAll(pageable);
     }
 
-    public void saveEmployee(Employee employee) {
-        employeeRepository.save(employee);
+    public Employee saveEmployee(Employee employee) {
+        return employeeRepository.save(employee);
+    }
+
+    public List<Employee> getAllEmployees() {
+        return employeeRepository.findAll();
+    }
+
+    public Employee getEmployee(long employeeId) {
+        return employeeRepository.findById(employeeId).orElseThrow(()-> new ResourceNotFoundException(EmployeeService.class, employeeId));
+    }
+
+    public Boolean deleteEmployee(long employeeId) {
+        if(employeeRepository.findById(employeeId).isPresent()) {
+            employeeRepository.deleteById(employeeId);
+            return true;
+        }
+        return false;
     }
 }
