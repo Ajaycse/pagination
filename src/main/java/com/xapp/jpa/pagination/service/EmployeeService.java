@@ -13,6 +13,9 @@ import java.util.List;
 @Service
 public class EmployeeService {
 
+    //TODO need to remove below unused variable
+    Long tempVariable = Long.valueOf(0);
+
     @Autowired
     private EmployeeRepository employeeRepository;
     public Page<Employee> getEmployeesWithPagination(Pageable pageable) {
