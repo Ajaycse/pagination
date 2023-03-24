@@ -9,6 +9,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.ArrayList;
 
 @Service
 public class EmployeeService {
@@ -18,6 +19,7 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
+    
     public Page<Employee> getEmployeesWithPagination(Pageable pageable) {
 
         return employeeRepository.findAll(pageable);
@@ -40,6 +42,6 @@ public class EmployeeService {
             employeeRepository.deleteById(employeeId);
             return true;
         }
-        return false;
+        return null;
     }
 }
