@@ -17,4 +17,11 @@ public class GlobalExceptionHandler {
         log.debug("Global Exception handler {} ", e);
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<Object> handleException(Exception e)
+    {
+        log.debug("Global Exception handler {} ", e);
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+    }
 }
