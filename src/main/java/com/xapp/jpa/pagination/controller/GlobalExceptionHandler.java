@@ -22,6 +22,6 @@ public class GlobalExceptionHandler {
     public ResponseEntity<Object> handleException(Exception e)
     {
         log.debug("Global Exception handler {} ", e);
-        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        return ResponseEntity.status(HttpStatus.MULTI_STATUS).body(e.getMessage());
     }
 }
