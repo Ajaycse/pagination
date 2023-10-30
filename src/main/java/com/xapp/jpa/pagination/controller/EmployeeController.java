@@ -1,6 +1,7 @@
 package com.xapp.jpa.pagination.controller;
 
 
+import com.xapp.jpa.pagination.dto.EmployeeDTO;
 import com.xapp.jpa.pagination.entity.Employee;
 import com.xapp.jpa.pagination.service.EmployeeService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,6 +24,13 @@ public class EmployeeController {
     public ResponseEntity<Employee> saveEmployee(@RequestBody Employee employee){
         return new ResponseEntity<>(employeeService.saveEmployee(employee), HttpStatus.CREATED);
     }
+
+    @PutMapping("employee/{employeeId}")
+    public ResponseEntity<EmployeeDTO> updateEmployee(@PathVariable("employeeId")  long employeeId, @RequestBody EmployeeDTO employeeDto){
+        employeeDto.setId(employeeId);
+        return  ResponseEntity.ok(employeeService.updateEmployee(employeeDto));
+    }
+
 
     @GetMapping
     public ResponseEntity<Page<Employee>> getEmployees(Pageable pageable){

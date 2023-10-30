@@ -1,6 +1,8 @@
 package com.xapp.jpa.pagination.service;
 
 
+import com.xapp.jpa.pagination.EmployeeMapper;
+import com.xapp.jpa.pagination.dto.EmployeeDTO;
 import com.xapp.jpa.pagination.entity.Employee;
 import com.xapp.jpa.pagination.repo.EmployeeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +20,10 @@ public class EmployeeService {
 
     @Autowired
     private EmployeeRepository employeeRepository;
-    
+
+    @Autowired
+    private EmployeeMapper employeeMapper;
+
     public Page<Employee> getEmployeesWithPagination(Pageable pageable) {
 
         return employeeRepository.findAll(pageable);
@@ -42,5 +47,17 @@ public class EmployeeService {
             return true;
         }
         return false;
+    }
+
+    public EmployeeDTO updateEmployee(EmployeeDTO employeeDto) {
+
+        var employee = employeeRepository.findById(employeeDto.getId()).orElseThrow(() -> new ResourceNotFoundException(Employee.class, employeeDto.getId()));
+
+        employeeDto.setType(employee.getType());
+        employeeMapper.updateEntity(employee, employeeDto);
+
+        Employee employeeEntity = employeeRepository.save(employee);
+
+        return employeeMapper.mapToDto(employeeEntity);
     }
 }
